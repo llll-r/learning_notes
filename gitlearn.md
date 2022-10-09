@@ -54,7 +54,7 @@
 
   1. `git branch dev`
 
-     2 .`git checkout dev`
+  2. `git checkout dev`
 
 - `git branch`命令会列出所有分支，当前分支前面会标一个`*`号。
 
@@ -66,3 +66,40 @@
 
 
 
+## 4. 查看分支
+ 
+- `git remote -v` 查看自己本地分支关联到远程的仓库
+
+- `git branch`  查看自己所在分支
+
+## 5.一些常用操作
+
+1. 撤销commit
+ `git reset --soft HEAD^ `
+`--mixed` 意思是：不删除工作空间改动代码，撤销commit，并且撤销git add . 操作。这个为默认参数,git reset --mixed HEAD^和 git reset HEAD^ 效果是一样的。
+`--soft `  不删除工作空间改动代码，撤销commit，不撤销git add . 
+`--hard` 删除工作空间改动代码，撤销commit，撤销git add . 注意完成这个操作后，就恢复到了上一次的commit状态
+
+2. `git reset --merge` 取消merge
+
+3. `git status` 忘记修改了哪些文件的时候可以使用 git status  来查看当前状态，红色的字体显示的就是修改的文件。
+
+4. `git push --force origin` 如果远程主机的版本比本地版本更新，推送时Git会报错，要求先在本地做git pull合并差异，然后再推送到远程主机。如果一定要推送，可以使用--force选项。如果远程主机的版本比本地版本更新，推送时Git会报错，要求先在本地做git pull合并差异，然后再推送到远程主机。如果一定要推送，可以使用--force选项。
+
+
+## 6. 场景问题：
+1. 在不commit本地代码的情况下，git pull远程代码，git pull文件时与本地文件冲突的解决:
+在不commit本地代码的情况下，git pull远程代码，git pull文件时与本地文件冲突的解决：
+问题：甲修改了文件A并且push到了git server上，这时乙也在修改文件A，他想看一下甲修改了什么，于是从git server上pull下来，但是会遇到这样的提示：
+error: Your local changes to the following files would be overwritten by merge:
+文件A Please, commit your changes or stash them before you can merge.
+这里乙可以commit本地文件修改再pull
+可是乙不想把他未完成的修改commit，这个时候就可以先把文件A暂存起来，不commit，再pull
+
+Error pulling origin: error: Your local changes to the following files would be overwritten by merge
+
+解决：
+
+1. `git stash`       先将本地修改存储起来
+2. `git pull`        暂存了本地修改之后，就可以pull了
+3. `git stash pop`   还原暂存的内容
